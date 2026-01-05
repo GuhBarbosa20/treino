@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Treinos 2026</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --success: #03dac6;
+            
+            /* Cores dos Perfis */
+            --gustavo-color: #BB86FC;
+            --fabiano-color: #2196F3;
+            --vanessa-color: #E91E63;
+            
+            /* Cor atual (padrão Gustavo) */
+            --primary: var(--gustavo-color);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text);
+            margin: 0;
+            padding-bottom: 90px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* HEADER & PERFIL SELECTOR */
+        header {
+            background-color: var(--card-bg);
+            padding: 15px 10px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #333;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .profile-selector {
+            display: flex;
+            background: #2c2c2c;
+            border-radius: 10px;
+            padding: 4px;
+            gap: 5px;
+        }
+
+        .profile-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            padding: 10px 0;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .profile-btn.active {
+            background-color: #444;
+            color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        /* Indicador de cor do perfil ativo */
+        .profile-btn.active[data-profile="gustavo"] { color: var(--gustavo-color); }
+        .profile-btn.active[data-profile="fabiano"] { color: var(--fabiano-color); }
+        .profile-btn.active[data-profile="vanessa"] { color: var(--vanessa-color); }
+
+        /* TAB BAR (BOTTOM) */
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            background-color: var(--card-bg);
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            border-top: 1px solid #333;
+            padding-bottom: env(safe-area-inset-bottom);
+            z-index: 100;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            padding: 15px 0;
+            font-size: 1.1rem;
+            font-weight: bold;
+            flex: 1;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+        }
+        
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 20%;
+            right: 20%;
+            height: 3px;
+            background-color: var(--primary);
+            border-radius: 0 0 4px 4px;
+        }
+
+        /* CONTEÚDO */
+        .content-area {
+            padding: 15px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .day-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+
+        .day-title {
+            font-size: 1.3rem;
+            color: #fff;
+            margin: 0;
+        }
+        
+        .day-tag {
+            background-color: #333;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: var(--primary);
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .exercise-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid transparent;
+            transition: transform 0.1s;
+        }
+        
+        .exercise-card:active {
+            transform: scale(0.98);
+        }
+
+        .exercise-info { flex: 1; padding-right: 10px; }
+        .exercise-info h3 { margin: 0 0 6px 0; font-size: 1rem; color: #fff; line-height: 1.3; }
+        .exercise-info p { margin: 0; color: var(--primary); font-weight: 600; font-size: 0.95rem; }
+        .exercise-info span { font-size: 0.85rem; color: var(--text-secondary); display: block; margin-top: 4px; font-style: italic;}
+
+        /* CHECKBOX */
+        .check-circle {
+            width: 28px;
+            height: 28px;
+            border: 2px solid #555;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .done .check-circle {
+            background-color: var(--success);
+            border-color: var(--success);
+        }
+        
+        .done .check-circle::after { content: '✓'; color: #000; font-weight: 800; font-size: 14px; }
+        .done h3 { text-decoration: line-through; color: #555; }
+        .done p, .done span { color: #555; }
+        .done { border-color: #333; background-color: #161616; }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--text-secondary);
+        }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .hidden { display: none !important; }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="profile-selector">
+        <button class="profile-btn active" onclick="setProfile('gustavo')" data-profile="gustavo">GUSTAVO</button>
+        <button class="profile-btn" onclick="setProfile('fabiano')" data-profile="fabiano">FABIANO</button>
+        <button class="profile-btn" onclick="setProfile('vanessa')" data-profile="vanessa">VANESSA</button>
+    </div>
+</header>
+
+<main id="main-container" class="content-area">
+    </main>
+
+<div class="tabs">
+    <button class="tab-btn active" onclick="setDay('A')">A</button>
+    <button class="tab-btn" onclick="setDay('B')">B</button>
+    <button class="tab-btn" onclick="setDay('C')">C</button>
+    <button class="tab-btn" onclick="setDay('D')">D</button>
+    <button class="tab-btn" onclick="setDay('E')">E</button>
+</div>
+
+<script>
+    const workouts = {
+        gustavo: {
+            A: {
+                title: "Peito + Tríceps",
+                exercises: [
+                    { name: "Supino reto barra", sets: "5x5–6" },
+                    { name: "Supino inclinado halteres", sets: "4x8–10" },
+                    { name: "Crucifixo inclinado halteres", sets: "3x10–12" },
+                    { name: "Paralelas com carga", sets: "4x Falha", obs: "Técnica" },
+                    { name: "Tríceps testa barra W", sets: "4x8–10" },
+                    { name: "Tríceps corda", sets: "3x12–15" }
+                ]
+            },
+            B: {
+                title: "Pernas",
+                exercises: [
+                    { name: "Agachamento livre", sets: "6x4–6", obs: "Barra alta ou baixa" },
+                    { name: "Agachamento pausado", sets: "4x6", obs: "2s no fundo" },
+                    { name: "Leg press 45º pesado", sets: "4x10" },
+                    { name: "Cadeira extensora", sets: "3x12", obs: "+ Drop set final" },
+                    { name: "Panturrilha em pé", sets: "5x12–15" }
+                ]
+            },
+            C: {
+                title: "Costas + Bíceps",
+                exercises: [
+                    { name: "Barra fixa pronada", sets: "5x6–8", obs: "Com carga" },
+                    { name: "Remada curvada barra", sets: "4x6–8" },
+                    { name: "Remada cavalinho", sets: "4x8–10" },
+                    { name: "Pulldown fechado", sets: "3x10–12" },
+                    { name: "Rosca direta barra reta", sets: "4x6–8" },
+                    { name: "Rosca martelo", sets: "3x10–12" }
+                ]
+            },
+            D: {
+                title: "Ombros",
+                exercises: [
+                    { name: "Desenv. militar em pé", sets: "5x5–6" },
+                    { name: "Elevação lateral halteres", sets: "4x12" },
+                    { name: "Bi-set: Lateral + Frontal", sets: "3x10" },
+                    { name: "Crucifixo inverso livre", sets: "4x12–15" },
+                    { name: "Encolhimento barra", sets: "4x10–12" }
+                ]
+            },
+            E: {
+                title: "Posterior + Glúteos",
+                exercises: [
+                    { name: "Lev. Terra Romeno", sets: "5x6–8" },
+                    { name: "Mesa flexora", sets: "4x10–12" },
+                    { name: "Good morning", sets: "4x8" },
+                    { name: "Elevação pélvica barra", sets: "4x8–10" },
+                    { name: "Afundo andando barra", sets: "3x12", obs: "Cada perna" }
+                ]
+            }
+        },
+        fabiano: {
+            A: {
+                title: "Peito + Tríceps",
+                exercises: [
+                    { name: "Supino reto halteres", sets: "5x6–8", obs: "Cadência 3–1–1" },
+                    { name: "Supino inclinado (Barra/Maq)", sets: "4x8–10" },
+                    { name: "Crucifixo no cabo", sets: "3x12–15", obs: "Pico de contração" },
+                    { name: "Paralelas", sets: "4x Falha", obs: "Tronco inclinado" },
+                    { name: "Tríceps corda", sets: "3x10–12", obs: "+ Drop set" },
+                    { name: "Tríceps francês sentado", sets: "3x8–10" }
+                ]
+            },
+            B: {
+                title: "Pernas",
+                exercises: [
+                    { name: "Leg press 45º pesado", sets: "5x8–10" },
+                    { name: "Hack OU Smith squat", sets: "4x6–8" },
+                    { name: "Mesa flexora", sets: "4x10–12" },
+                    { name: "Stiff com halteres", sets: "4x8–10", obs: "Amplitude segura" },
+                    { name: "Elevação pélvica", sets: "4x8–10", obs: "Pausa 2s topo" },
+                    { name: "Panturrilha no Leg", sets: "5x12–15" }
+                ]
+            },
+            C: {
+                title: "Costas + Bíceps",
+                exercises: [
+                    { name: "Barra fixa (Pron/Neut)", sets: "5x Falha" },
+                    { name: "Puxada frente neutra", sets: "4x8–10", obs: "Pesada" },
+                    { name: "Remada máquina", sets: "4x8–10", obs: "Apoio no peito" },
+                    { name: "Pulldown unilateral", sets: "3x10–12", obs: "Com pausa" },
+                    { name: "Rosca direta barra W", sets: "4x6–8" },
+                    { name: "Rosca alternada sentada", sets: "3x10–12", obs: "Controle máximo" }
+                ]
+            },
+            D: {
+                title: "Ombros",
+                exercises: [
+                    { name: "Desenv. máquina encosto", sets: "5x6–8" },
+                    { name: "Elevação lateral sentada", sets: "4x12–15", obs: "+ Drop set" },
+                    { name: "Elev. lateral cabo uni.", sets: "3x12" },
+                    { name: "Crucifixo inverso máquina", sets: "4x12–15" },
+                    { name: "Encolhimento halteres", sets: "4x10–12", obs: "Com pausa" }
+                ]
+            }
+        },
+        vanessa: {
+            A: {
+                title: "Peito + Tríceps",
+                exercises: [
+                    { name: "Supino reto halteres", sets: "4x8–10" },
+                    { name: "Supino inclinado halteres", sets: "3x10–12" },
+                    { name: "Crucifixo no cabo", sets: "3x12–15" },
+                    { name: "Tríceps corda", sets: "4x12–15" },
+                    { name: "Tríceps coice cabo uni.", sets: "3x12–15" }
+                ]
+            },
+            B: {
+                title: "Posterior + Glúteos",
+                exercises: [
+                    { name: "Ativação: Abd. elástico + Ponte", sets: "2x20" },
+                    { name: "Elevação pélvica", sets: "5x8–10" },
+                    { name: "Stiff com halteres", sets: "4x10–12" },
+                    { name: "Mesa flexora", sets: "4x12–15", obs: "+ Drop na última" },
+                    { name: "Afundo búlgaro halter", sets: "3x10", obs: "Cada perna" },
+                    { name: "Cadeira abdutora", sets: "4x15–20", obs: "Pausa 2s" },
+                    { name: "Glúteos no cabo", sets: "3x12–15" }
+                ]
+            },
+            C: {
+                title: "Costas + Bíceps",
+                exercises: [
+                    { name: "Puxada frente (Neut/Sup)", sets: "4x10–12" },
+                    { name: "Remada máquina", sets: "4x10–12", obs: "Apoio no peito" },
+                    { name: "Pulldown unilateral", sets: "3x12", obs: "Com pausa" },
+                    { name: "Rosca direta barra W", sets: "3x10–12", obs: "Leve" },
+                    { name: "Rosca alternada sentada", sets: "3x12", obs: "Pegada neutra" }
+                ]
+            },
+            D: {
+                title: "Ombros",
+                exercises: [
+                    { name: "Desenv. máquina encosto", sets: "4x8–10" },
+                    { name: "Elev. lateral sentada", sets: "4x12–15", obs: "Amplitude curta" },
+                    { name: "Elev. lateral cabo", sets: "3x12–15" },
+                    { name: "Crucifixo inverso máquina", sets: "4x12–15" },
+                    { name: "Face pull", sets: "3x15–20" }
+                ]
+            },
+            E: {
+                title: "Pernas",
+                exercises: [
+                    { name: "Leg press 45º", sets: "5x10–12", obs: "Pés médios" },
+                    { name: "Hack OU Smith squat", sets: "4x8–10" },
+                    { name: "Cadeira extensora", sets: "4x12–15", obs: "Pausa 1–2s" },
+                    { name: "Passada no lugar halteres", sets: "3x12", obs: "Cada perna" },
+                    { name: "Panturrilha sentada", sets: "4x12–15" }
+                ]
+            }
+        }
+    };
+
+    let currentProfile = 'gustavo';
+    let currentDay = 'A';
+
+    function setProfile(profile) {
+        currentProfile = profile;
+        
+        // Update Buttons
+        document.querySelectorAll('.profile-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelector(`.profile-btn[data-profile="${profile}"]`).classList.add('active');
+        
+        // Update CSS Variable for Color
+        const root = document.documentElement;
+        if(profile === 'gustavo') root.style.setProperty('--primary', 'var(--gustavo-color)');
+        if(profile === 'fabiano') root.style.setProperty('--primary', 'var(--fabiano-color)');
+        if(profile === 'vanessa') root.style.setProperty('--primary', 'var(--vanessa-color)');
+
+        renderWorkout();
+    }
+
+    function setDay(day) {
+        currentDay = day;
+        
+        // Update Tabs
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        // Find the button with the correct onclick text (simpler selector)
+        const buttons = Array.from(document.querySelectorAll('.tab-btn'));
+        const activeBtn = buttons.find(b => b.textContent.trim() === day);
+        if(activeBtn) activeBtn.classList.add('active');
+
+        renderWorkout();
+    }
+
+    function toggleCheck(card) {
+        card.classList.toggle('done');
+        if (navigator.vibrate) navigator.vibrate(40);
+    }
+
+    function renderWorkout() {
+        const container = document.getElementById('main-container');
+        container.innerHTML = ''; // Clear current
+
+        const profileData = workouts[currentProfile];
+        const dayData = profileData[currentDay];
+
+        if (!dayData) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <h3>Dia de Descanso</h3>
+                    <p>Não há treino programado para o perfil ${currentProfile.charAt(0).toUpperCase() + currentProfile.slice(1)} no dia ${currentDay}.</p>
+                </div>
+            `;
+            return;
+        }
+
+        // Header do dia
+        const header = document.createElement('div');
+        header.className = 'day-header';
+        header.innerHTML = `
+            <h2 class="day-title">${dayData.title}</h2>
+            <span class="day-tag">TREINO ${currentDay}</span>
+        `;
+        container.appendChild(header);
+
+        // Lista de exercícios
+        dayData.exercises.forEach(ex => {
+            const card = document.createElement('div');
+            card.className = 'exercise-card';
+            card.onclick = function() { toggleCheck(this) };
+            
+            let obsHtml = ex.obs ? `<span>${ex.obs}</span>` : '';
+            
+            card.innerHTML = `
+                <div class="exercise-info">
+                    <h3>${ex.name}</h3>
+                    <p>${ex.sets}</p>
+                    ${obsHtml}
+                </div>
+                <div class="check-circle"></div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    // Inicialização
+    renderWorkout();
+
+</script>
+
+</body>
+</html>
