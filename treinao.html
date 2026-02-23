@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Treino Tracker v3</title>
+    <title>Treino Tracker v3.1</title>
     <style>
         :root {
             --bg-color: #121212;
@@ -29,7 +29,7 @@
             margin: 0;
             padding-bottom: 140px;
             -webkit-tap-highlight-color: transparent;
-            overflow-x: hidden; /* Para o confetti não quebrar scroll */
+            overflow-x: hidden;
         }
 
         /* HEADER & PROGRESS */
@@ -318,11 +318,47 @@
             D: { title: "Ombros", exercises: [ { name: "Desenv. máquina encosto", sets: "5x6–8" }, { name: "Elevação lateral sentada", sets: "4x12–15", obs: "+ Drop set" }, { name: "Elev. lateral cabo uni.", sets: "3x12" }, { name: "Crucifixo inverso máquina", sets: "4x12–15" }, { name: "Encolhimento halteres", sets: "4x10–12", obs: "Com pausa" } ] }
         },
         vanessa: {
-            A: { title: "Peito + Tríceps", exercises: [ { name: "Supino reto halteres", sets: "4x8–10" }, { name: "Supino inclinado halteres", sets: "3x10–12" }, { name: "Crucifixo no cabo", sets: "3x12–15" }, { name: "Tríceps corda", sets: "4x12–15" }, { name: "Tríceps coice cabo uni.", sets: "3x12–15" } ] },
-            B: { title: "Posterior + Glúteos", exercises: [ { name: "Ativação: Abd. elástico", sets: "2x20" }, { name: "Elevação pélvica", sets: "5x8–10" }, { name: "Stiff com halteres", sets: "4x10–12" }, { name: "Mesa flexora", sets: "4x12–15", obs: "+ Drop" }, { name: "Afundo búlgaro halter", sets: "3x10", obs: "Cada perna" }, { name: "Cadeira abdutora", sets: "4x15–20", obs: "Pausa 2s" }, { name: "Glúteos no cabo", sets: "3x12–15" } ] },
-            C: { title: "Costas + Bíceps", exercises: [ { name: "Puxada frente (Neut/Sup)", sets: "4x10–12" }, { name: "Remada máquina", sets: "4x10–12", obs: "Apoio no peito" }, { name: "Pulldown unilateral", sets: "3x12", obs: "Com pausa" }, { name: "Rosca direta barra W", sets: "3x10–12", obs: "Leve" }, { name: "Rosca alternada sentada", sets: "3x12", obs: "Pegada neutra" } ] },
-            D: { title: "Ombros", exercises: [ { name: "Desenv. máquina encosto", sets: "4x8–10" }, { name: "Elev. lateral sentada", sets: "4x12–15", obs: "Curta" }, { name: "Elev. lateral cabo", sets: "3x12–15" }, { name: "Crucifixo inverso máquina", sets: "4x12–15" }, { name: "Face pull", sets: "3x15–20" } ] },
-            E: { title: "Pernas", exercises: [ { name: "Leg press 45º", sets: "5x10–12", obs: "Pés médios" }, { name: "Hack OU Smith squat", sets: "4x8–10" }, { name: "Cadeira extensora", sets: "4x12–15", obs: "Pausa 1–2s" }, { name: "Passada no lugar halteres", sets: "3x12", obs: "Cada perna" }, { name: "Panturrilha sentada", sets: "4x12–15" } ] }
+            A: { title: "Posterior e Glúteos", exercises: [ 
+                { name: "Agachamento Sumô no Smith", sets: "15-12-10-8", obs: "Carga Progressiva" }, 
+                { name: "Subida no Caixote/Degrau", sets: "4x10", obs: "" }, 
+                { name: "Mesa Flexora", sets: "4x10 + Drop", obs: "Segurar 3s na contração (exceto drop)" }, 
+                { name: "Stiff na Polia Baixa", sets: "4x12", obs: "" }, 
+                { name: "Cadeira Abdutora", sets: "10x10", obs: "Tronco p/ frente. 10s descanso a cada 10" }, 
+                { name: "Elevação Pélvica", sets: "4x10", obs: "Iso 10s ao final das séries" } 
+            ]},
+            B: { title: "Costas e Bíceps", exercises: [ 
+                { name: "Puxada Unilateral", sets: "3x12", obs: "" }, 
+                { name: "Puxada Neutra Polia Alta", sets: "4x30", obs: "Rest pause 10s a cada 10 reps" }, 
+                { name: "Remada Cavalinho (Neutra)", sets: "15-12-10-8", obs: "Carga Progressiva" }, 
+                { name: "Remada Baixa (Pronada) + Elev. Y", sets: "4x10", obs: "Bi-set na Polia" }, 
+                { name: "Rosca Scott Máquina", sets: "4x10+10", obs: "Drop set (diminui carga 1x)" }, 
+                { name: "Rosca Alternada Polia Baixa", sets: "4x10", obs: "Segurar na isometria" } 
+            ]},
+            C: { title: "Quadríceps", exercises: [ 
+                { name: "Agachamento Livre", sets: "2x15, 2x12, 2x10, 2x8", obs: "Carga Progressiva" }, 
+                { name: "Leg Press 45º", sets: "4x15", obs: "Isometria 15s" }, 
+                { name: "Afundo Búlgaro c/ Barra", sets: "4x10", obs: "" }, 
+                { name: "Cadeira Extensora", sets: "15-12-10-8", obs: "Drop reverso (aumenta reps, tira carga)" }, 
+                { name: "Cadeira Adutora", sets: "3x30", obs: "Rest pause 10s" }, 
+                { name: "Panturrilha Sentado", sets: "4x Falha", obs: "" } 
+            ]},
+            D: { title: "Peito, Ombro e Tríceps", exercises: [ 
+                { name: "Supino Reto Barra", sets: "15-12-10-8", obs: "Carga Progressiva" }, 
+                { name: "Crucifixo Inclinado Halteres", sets: "15-12-10-8", obs: "Carga Progressiva" }, 
+                { name: "Desenv. Arnold Sentado", sets: "15-12-10-8", obs: "Carga Progressiva" }, 
+                { name: "Elev. Lateral Unilateral Polia", sets: "3x12", obs: "Carga Progressiva" }, 
+                { name: "Elev. Frontal Alternada", sets: "4x15", obs: "" }, 
+                { name: "Tríceps Inverso Polia", sets: "4x10", obs: "Iso 3s em baixo" }, 
+                { name: "Tríceps Coice Polia", sets: "4x15", obs: "" } 
+            ]},
+            E: { title: "Glúteos (Foco)", exercises: [ 
+                { name: "Elevação Pélvica c/ Barra", sets: "4x12", obs: "Iso 10s ao final das 4 séries" }, 
+                { name: "Stiff Sumô c/ Halteres", sets: "4x30", obs: "Altas repetições" }, 
+                { name: "Elevação Pélvica Unilateral", sets: "4x15", obs: "" }, 
+                { name: "Stiff Halteres (Amplitude Curta)", sets: "4x10", obs: "Do joelho p/ baixo, não subir tudo" }, 
+                { name: "Glúteo Coice Polia", sets: "4x15", obs: "Perna esticada. Curto em cima" }, 
+                { name: "Cadeira Abdutora", sets: "10x10", obs: "Tronco p/ frente. 10s descanso" } 
+            ]}
         }
     };
 
