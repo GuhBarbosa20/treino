@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Treino Tracker v3.2</title>
+    <title>Treino Tracker v3.1</title>
     <style>
         :root {
             --bg-color: #121212;
@@ -303,95 +303,61 @@
 
 <script>
     /* --- DATA LAYER --- */
-    const treinoMasculino = {
-        A: { title: "Peito, Ombro e Tríceps", exercises: [
-            { name: "Supino Reto Máquina", sets: "15-12-10-8", obs: "Carga Progressiva" },
-            { name: "Banco Supino Inclinado", sets: "14-12-10-8", obs: "Carga Progressiva" },
-            { name: "Crucifixo Máquina", sets: "15-12-10", obs: "Carga Progressiva" },
-            { name: "Desenvolvimento no Smith", sets: "15-12-10-8", obs: "Carga Progressiva" },
-            { name: "Elevação Lateral Inclinado com Halteres", sets: "15-12-10", obs: "Carga Fixa" },
-            { name: "Tríceps Testa no Banco Inclinado (Barra W)", sets: "15-12-10", obs: "Carga Fixa" },
-            { name: "Tríceps na Polia com Corda", sets: "15-12-10-8", obs: "Carga Progressiva" },
-            { name: "Tríceps Banco com Pernas Estendidas", sets: "4x Falha", obs: "0kg" }
-        ]},
-        B: { title: "Posterior e Glúteos", exercises: [
-            { name: "Bi-set: Agachamento Hack Invertido + Isometria na Parede", sets: "15-12-10-8 + 4x 1min", obs: "Carga Progressiva no Hack" },
-            { name: "Agachamento Búlgaro", sets: "3x 12-10-8", obs: "Dropando (12 c/ 2 halteres, 10 c/ 1, 8 s/ peso)" },
-            { name: "Cadeira Flexora", sets: "15-12-10-8", obs: "Carga Progressiva" },
-            { name: "Flexora Unilateral", sets: "3x 30", obs: "Retirar carga a cada 10 reps, sem descanso" },
-            { name: "Bi-set: Abdução de Quadril Máquina + Stiff Sumô com Barra", sets: "3x 1min + 3x 10", obs: "Alternar exercícios" },
-            { name: "Elevação de Quadril na Máquina", sets: "3x 10", obs: "Carga Progressiva" }
-        ]},
-        C: { title: "Costas e Bíceps", exercises: [
-            { name: "Puxada Neutra (Barra H)", sets: "3x 30", obs: "Rest pause de 10s a cada 10 reps" },
-            { name: "Remada Alta na Polia Alta com Corda", sets: "4x 10", obs: "0kg" },
-            { name: "Remada Curvada com Barra Reta (Supinada)", sets: "15-12-10-Drop", obs: "Carga Progressiva" },
-            { name: "Pulldown Barra Reta", sets: "4x 10", obs: "Unilateral" },
-            { name: "Rosca Direta na Polia (Barra W)", sets: "3x 30", obs: "Drop (Retirar carga a cada 10 reps)" },
-            { name: "Rosca Alternada na Polia Baixa", sets: "4x 10", obs: "Realizar isometria alternada" },
-            { name: "Rosca Martelo Direta Banco Inclinado", sets: "4x 10", obs: "0kg" }
-        ]},
-        D: { title: "Quadríceps", exercises: [
-            { name: "Agachamento Livre ou Articulado", sets: "4x 10-12", obs: "Carga Progressiva" },
-            { name: "Leg Press 45", sets: "4x 10-12", obs: "Carga Progressiva" },
-            { name: "Cadeira Extensora", sets: "4x 15", obs: "Iso de 5 seg a cada 5 reps" },
-            { name: "Agachamento Hack", sets: "4x 10-12", obs: "Pés fechados" },
-            { name: "Panturrilha Sentado Máquina", sets: "4x 15-20", obs: "Carga Progressiva" }
-        ]},
-        E: { title: "Ombro", exercises: [
-            { name: "Desenvolvimento Arnold Sentado", sets: "14-12-10-8", obs: "Carga Progressiva" },
-            { name: "Desenvolvimento Máquina (Neutra)", sets: "14-12-10-8", obs: "Carga Progressiva" },
-            { name: "Elevação Lateral Unilateral (Polia Baixa Neutra)", sets: "4x 12", obs: "0kg" },
-            { name: "Elevação Frontal Unilateral (Polia Neutra)", sets: "4x 12", obs: "0kg" },
-            { name: "Crucifixo Inverso na Polia Baixa", sets: "4x 12", obs: "0kg" },
-            { name: "Bi-set: Remada Alta (Polia Baixa Reta) + Encolhimento Halteres", sets: "14-12-10-8", obs: "Carga Progressiva" }
-        ]}
-    };
-
     const workouts = {
-        gustavo: treinoMasculino,
-        fabiano: treinoMasculino,
+        gustavo: {
+            A: { title: "Peito + Tríceps", exercises: [ { name: "Supino reto barra", sets: "5x5–6" }, { name: "Supino inclinado halteres", sets: "4x8–10" }, { name: "Crucifixo inclinado halteres", sets: "3x10–12" }, { name: "Paralelas com carga", sets: "4x Falha", obs: "Técnica" }, { name: "Tríceps testa barra W", sets: "4x8–10" }, { name: "Tríceps corda", sets: "3x12–15" } ] },
+            B: { title: "Pernas", exercises: [ { name: "Agachamento livre", sets: "6x4–6", obs: "Barra alta ou baixa" }, { name: "Agachamento pausado", sets: "4x6", obs: "2s no fundo" }, { name: "Leg press 45º pesado", sets: "4x10" }, { name: "Cadeira extensora", sets: "3x12", obs: "+ Drop set final" }, { name: "Panturrilha em pé", sets: "5x12–15" } ] },
+            C: { title: "Costas + Bíceps", exercises: [ { name: "Puxada na frente (pulldown) na barra reta – pegada pronada", sets: "5x6–8", obs: "Com carga" }, { name: "Remada curvada barra", sets: "4x6–8" }, { name: "Remada cavalinho", sets: "4x8–10" }, { name: "Pulldown fechado", sets: "3x10–12" }, { name: "Rosca direta barra reta", sets: "4x6–8" }, { name: "Rosca Alongada", sets: "3x10–12" } ] },
+            D: { title: "Ombros", exercises: [ { name: "Desenv. militar em pé", sets: "5x5–6" }, { name: "Elevação lateral halteres", sets: "4x12" }, { name: "Bi-set: Lateral + Frontal", sets: "3x10" }, { name: "Crucifixo inverso livre", sets: "4x12–15" }, { name: "Encolhimento barra", sets: "4x10–12" } ] },
+            E: { title: "Posterior + Glúteos", exercises: [ { name: "Lev. Terra Romeno", sets: "5x6–8" }, { name: "Mesa flexora", sets: "4x10–12" }, { name: "Good morning", sets: "4x8" }, { name: "Elevação pélvica barra", sets: "4x8–10" }, { name: "Afundo andando barra", sets: "3x12", obs: "Cada perna" } ] }
+        },
+        fabiano: {
+            A: { title: "Peito + Tríceps", exercises: [ { name: "Supino reto halteres", sets: "5x6–8", obs: "Cadência 3–1–1" }, { name: "Supino inclinado (Barra/Maq)", sets: "4x8–10" }, { name: "Crucifixo no cabo", sets: "3x12–15", obs: "Pico" }, { name: "Paralelas", sets: "4x Falha", obs: "Tronco inclinado" }, { name: "Tríceps corda", sets: "3x10–12", obs: "+ Drop set" }, { name: "Tríceps francês sentado", sets: "3x8–10" } ] },
+            B: { title: "Pernas", exercises: [ { name: "Leg press 45º pesado", sets: "5x8–10" }, { name: "Hack OU Smith squat", sets: "4x6–8" }, { name: "Mesa flexora", sets: "4x10–12" }, { name: "Stiff com halteres", sets: "4x8–10", obs: "Amplitude segura" }, { name: "Elevação pélvica", sets: "4x8–10", obs: "Pausa 2s topo" }, { name: "Panturrilha no Leg", sets: "5x12–15" } ] },
+            C: { title: "Costas + Bíceps", exercises: [ { name: "Barra fixa (Pron/Neut)", sets: "5x Falha" }, { name: "Puxada frente neutra", sets: "4x8–10", obs: "Pesada" }, { name: "Remada máquina", sets: "4x8–10", obs: "Apoio no peito" }, { name: "Pulldown unilateral", sets: "3x10–12", obs: "Com pausa" }, { name: "Rosca direta barra W", sets: "4x6–8" }, { name: "Rosca alternada sentada", sets: "3x10–12", obs: "Controle" } ] },
+            D: { title: "Ombros", exercises: [ { name: "Desenv. máquina encosto", sets: "5x6–8" }, { name: "Elevação lateral sentada", sets: "4x12–15", obs: "+ Drop set" }, { name: "Elev. lateral cabo uni.", sets: "3x12" }, { name: "Crucifixo inverso máquina", sets: "4x12–15" }, { name: "Encolhimento halteres", sets: "4x10–12", obs: "Com pausa" } ] }
+        },
         vanessa: {
             A: { title: "Posterior e Glúteos", exercises: [ 
-                { name: "Agachamento Sumô no Step c/ Halteres", sets: "15-12-10-8", obs: "Carga Progressiva" }, 
-                { name: "Afundo com Step", sets: "4x 10+5", obs: "10 com peso + 5 sem peso" }, 
-                { name: "Bi-set: Flexora Unilateral + Stiff Unilateral", sets: "4x 10", obs: "Alternar exercícios" }, 
-                { name: "Abdução de Quadril Máq. (Corpo à Frente)", sets: "30-20-15-10", obs: "Carga Progressiva" }, 
-                { name: "Elevação de Quadril com Barra", sets: "15-12-10-8", obs: "Carga Progressiva" } 
+                { name: "Agachamento Sumô no Smith", sets: "15-12-10-8", obs: "Carga Progressiva" }, 
+                { name: "Subida no Caixote/Degrau", sets: "4x10", obs: "" }, 
+                { name: "Mesa Flexora", sets: "4x10 + Drop", obs: "Segurar 3s na contração (exceto drop)" }, 
+                { name: "Stiff na Polia Baixa", sets: "4x12", obs: "" }, 
+                { name: "Cadeira Abdutora", sets: "10x10", obs: "Tronco p/ frente. 10s descanso a cada 10" }, 
+                { name: "Elevação Pélvica", sets: "4x10", obs: "Iso 10s ao final das séries" } 
             ]},
             B: { title: "Costas e Bíceps", exercises: [ 
-                { name: "Puxada Aberta Barra Reta", sets: "15-12-10-Drop", obs: "Carga Progressiva" }, 
-                { name: "Puxada Neutra Triângulo", sets: "3x 10", obs: "Movimento lento e alongado" }, 
-                { name: "Remada Baixa Polia (Supinada)", sets: "15-12-10", obs: "Carga Progressiva" }, 
-                { name: "Pulldown Barra Aberta", sets: "3x 12", obs: "" }, 
-                { name: "Crucifixo Inverso Unilateral na Polia", sets: "3x 10", obs: "" }, 
-                { name: "Rosca Direta Barra W", sets: "15-12-10", obs: "Carga Progressiva" }, 
-                { name: "Rosca Martelo Alternada Isométrica", sets: "4x 10", obs: "Segurar na isometria c/ halteres" } 
+                { name: "Puxada Unilateral", sets: "3x12", obs: "" }, 
+                { name: "Puxada Neutra Polia Alta", sets: "4x30", obs: "Rest pause 10s a cada 10 reps" }, 
+                { name: "Remada Cavalinho (Neutra)", sets: "15-12-10-8", obs: "Carga Progressiva" }, 
+                { name: "Remada Baixa (Pronada) + Elev. Y", sets: "4x10", obs: "Bi-set na Polia" }, 
+                { name: "Rosca Scott Máquina", sets: "4x10+10", obs: "Drop set (diminui carga 1x)" }, 
+                { name: "Rosca Alternada Polia Baixa", sets: "4x10", obs: "Segurar na isometria" } 
             ]},
             C: { title: "Quadríceps", exercises: [ 
-                { name: "Agachamento Livre com Barra", sets: "4x 10", obs: "Iso de 3s embaixo em todas" }, 
-                { name: "Leg Press 45", sets: "15-12-10-8-Drop", obs: "Carga Progressiva" }, 
-                { name: "Cadeira Extensora", sets: "3x 30", obs: "Rest pause (10s a cada 10 reps)" }, 
-                { name: "Adução Simultânea c/ Caneleira", sets: "4x 15", obs: "" }, 
-                { name: "Extensão de Panturrilha Máquina", sets: "4x Falha", obs: "" }, 
-                { name: "Panturrilha no Smith", sets: "4x 30", obs: "10 reto, 10 abduzido, 10 aduzido" } 
+                { name: "Agachamento Livre", sets: "2x15, 2x12, 2x10, 2x8", obs: "Carga Progressiva" }, 
+                { name: "Leg Press 45º", sets: "4x15", obs: "Isometria 15s" }, 
+                { name: "Afundo Búlgaro c/ Barra", sets: "4x10", obs: "" }, 
+                { name: "Cadeira Extensora", sets: "15-12-10-8", obs: "Drop reverso (aumenta reps, tira carga)" }, 
+                { name: "Cadeira Adutora", sets: "3x30", obs: "Rest pause 10s" }, 
+                { name: "Panturrilha Sentado", sets: "4x Falha", obs: "" } 
             ]},
             D: { title: "Peito, Ombro e Tríceps", exercises: [ 
-                { name: "Supino Inclinado com Halteres", sets: "15-12-10", obs: "Carga Progressiva" }, 
-                { name: "Crossover Polia Alta", sets: "3x 10", obs: "" }, 
-                { name: "Desenvolvimento Máquina (Pronada)", sets: "15-12-10", obs: "Carga Progressiva" }, 
-                { name: "Elevação Lateral Inclinado c/ Halteres", sets: "3x 12", obs: "" }, 
-                { name: "Elevação Frontal na Polia c/ Corda", sets: "3x 10", obs: "" }, 
-                { name: "Tríceps na Polia Barra W", sets: "3x 30", obs: "Drop a cada 10 repetições" }, 
-                { name: "Tríceps Testa Unilateral Isométrico", sets: "3x 10", obs: "Com halteres" } 
+                { name: "Supino Reto Barra", sets: "15-12-10-8", obs: "Carga Progressiva" }, 
+                { name: "Crucifixo Inclinado Halteres", sets: "15-12-10-8", obs: "Carga Progressiva" }, 
+                { name: "Desenv. Arnold Sentado", sets: "15-12-10-8", obs: "Carga Progressiva" }, 
+                { name: "Elev. Lateral Unilateral Polia", sets: "3x12", obs: "Carga Progressiva" }, 
+                { name: "Elev. Frontal Alternada", sets: "4x15", obs: "" }, 
+                { name: "Tríceps Inverso Polia", sets: "4x10", obs: "Iso 3s em baixo" }, 
+                { name: "Tríceps Coice Polia", sets: "4x15", obs: "" } 
             ]},
-            E: { title: "Glúteos", exercises: [ 
-                { name: "Elevação de Quadril com Barra", sets: "15-12-10-8-Drop", obs: "Carga Progressiva" }, 
-                { name: "Agachamento Hack Invertido Unilateral", sets: "3x 10", obs: "" }, 
-                { name: "Flexora Unilateral", sets: "4x 12", obs: "" }, 
-                { name: "Stiff na Polia (Pés na anilha)", sets: "4x 10", obs: "" }, 
-                { name: "Glúteos Coice na Polia", sets: "4x 10", obs: "Diagonal" }, 
-                { name: "Abdução de Quadril Polia Baixa Unilateral", sets: "4x 12", obs: "" } 
+            E: { title: "Glúteos (Foco)", exercises: [ 
+                { name: "Elevação Pélvica c/ Barra", sets: "4x12", obs: "Iso 10s ao final das 4 séries" }, 
+                { name: "Stiff Sumô c/ Halteres", sets: "4x30", obs: "Altas repetições" }, 
+                { name: "Elevação Pélvica Unilateral", sets: "4x15", obs: "" }, 
+                { name: "Stiff Halteres (Amplitude Curta)", sets: "4x10", obs: "Do joelho p/ baixo, não subir tudo" }, 
+                { name: "Glúteo Coice Polia", sets: "4x15", obs: "Perna esticada. Curto em cima" }, 
+                { name: "Cadeira Abdutora", sets: "10x10", obs: "Tronco p/ frente. 10s descanso" } 
             ]}
         }
     };
